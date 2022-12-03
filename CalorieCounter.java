@@ -44,17 +44,15 @@ public class CalorieCounter {
     }
 
     private void makeElfArray(ArrayList<String> input) {
-        int n = 0;
         ArrayList<String> inventory = new ArrayList<String>();
         for (int i = 0; i < input.size(); i++) {
             if (input.get(i).equals("")) {
                 // construct new elf, append to array
                 String[] inv = new String[inventory.size()];
                 inv = inventory.toArray(inv);
-                elfArr.add(new Elf(n, inv));
+                elfArr.add(new Elf(inv));
                 
                 inventory.clear();
-                n++;
             } else {
                 // put number in arrayList
                 inventory.add(input.get(i));
@@ -65,6 +63,8 @@ public class CalorieCounter {
     private int[] findGreatestSums() {
         int[] maxArr = new int[3];
         for (Elf e : elfArr) {
+            // there's certainly a more elegant way to do this
+            // but it is late and I am tired
             if (e.sum >= maxArr[0]) {
                 maxArr[2] = maxArr[1];
                 maxArr[1] = maxArr[0];
@@ -81,12 +81,10 @@ public class CalorieCounter {
     }
 
     private class Elf {
-        int number;
         int sum;
         int[] foodList;
 
-        private Elf(int number, String[] input) {
-            this.number = number;
+        private Elf(String[] input) {
             foodList = new int[input.length];
             sum = 0;
 
