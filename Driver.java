@@ -2,6 +2,7 @@ public class Driver {
     public static void main(String[] args) {
         CalorieCounter calorieCounter = new CalorieCounter("inputs/day1.txt");
         RockPaperScissors rockPaperScissors = new RockPaperScissors("inputs/day2.txt");
+        RucksackSorter rucksackSorter = new RucksackSorter("inputs/day3.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -12,5 +13,9 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 2.1: " + rockPaperScissors.getHelpfulScore());
         System.out.println("Problem 2.2: " + rockPaperScissors.getProperScore());
+
+        System.out.println();
+        System.out.println("Problem 3.1: " + rucksackSorter.getTotalCommonPriority());
+        System.out.println("Problem 3.2: " + rucksackSorter.getTotalBadgePriority());
     }
 }
