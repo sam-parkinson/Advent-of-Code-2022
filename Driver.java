@@ -3,6 +3,7 @@ public class Driver {
         CalorieCounter calorieCounter = new CalorieCounter("inputs/day1.txt");
         RockPaperScissors rockPaperScissors = new RockPaperScissors("inputs/day2.txt");
         RucksackSorter rucksackSorter = new RucksackSorter("inputs/day3.txt");
+        CleanupAssignments cleanupAssignments = new CleanupAssignments("inputs/day4.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -17,5 +18,9 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 3.1: " + rucksackSorter.getTotalCommonPriority());
         System.out.println("Problem 3.2: " + rucksackSorter.getTotalBadgePriority());
+
+        System.out.println();
+        System.out.println("Problem 4.1: " + cleanupAssignments.getMutualOverlapCount());
+        System.out.println("Problem 4.2: " + cleanupAssignments.getAnyOverlapCount());
     }
 }
