@@ -4,6 +4,7 @@ public class Driver {
         RockPaperScissors rockPaperScissors = new RockPaperScissors("inputs/day2.txt");
         RucksackSorter rucksackSorter = new RucksackSorter("inputs/day3.txt");
         CleanupAssignments cleanupAssignments = new CleanupAssignments("inputs/day4.txt");
+        CrateStacker crateStacker = new CrateStacker("inputs/day5.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -22,5 +23,9 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 4.1: " + cleanupAssignments.getMutualOverlapCount());
         System.out.println("Problem 4.2: " + cleanupAssignments.getAnyOverlapCount());
+
+        System.out.println();
+        System.out.println("Problem 5.1: " + crateStacker.getTopCrates9000());
+        System.out.println("Problem 5.2: " + crateStacker.getTopCrates9001());
     }
 }

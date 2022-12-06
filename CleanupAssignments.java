@@ -66,16 +66,9 @@ public class CleanupAssignments {
         }
 
         private boolean hasAnyOverlap() {
-            // conditions for any overlap
-            // mutual overlap condition
             // a starts before/when b starts and ends after/when b starts
             // b starts before/when a starts and ends after/when a starts
             return (startA <= startB && endA >= startB) || (startA >= startB && startA <= endB);
         }
-
-        
-            // (startA >= endB && startA <= startB) || 
-            // (endA <= endB && startA >= startB) || 
-
     }
 }
