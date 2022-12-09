@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileSystem {
+    private final int TOTAL_SPACE = 70000000;
+    private final int NECESSARY_SPACE = 30000000;
+
     private ArrayList<String> commandList;
     private ArrayList<FileNode> fileTree;
-    private int smallDirectorySize;
+    private int smallDirectorySize, availableSpace, minDeletableDirSize;
 
     public FileSystem(String address) {
         parseInput(address);
@@ -14,10 +17,16 @@ public class FileSystem {
         makeFileTree();
         // findFolderSize(0);
         smallDirectorySize = findSmallDirectorySize();
+        availableSpace = findAvailableSpace();
+        minDeletableDirSize = findMinDeletableDirSize();
     }
 
     public int getSmallDirectorySize() {
         return this.smallDirectorySize;
+    }
+
+    public int getMinDeletableDirSize() {
+        return this.minDeletableDirSize;
     }
 
     private void parseInput(String address) {
@@ -76,11 +85,33 @@ public class FileSystem {
 
         for (int i = 0; i < fileTree.size(); i++) {
             if (fileTree.get(i).size == 0) {
-                int test;
-                test = findFolderSize(i);
+                int test = findFolderSize(i);
 
                 if (test <= 100000) {
                     size += test;
+                }
+            }
+        }
+
+        return size;
+    }
+
+    private int findAvailableSpace() {
+        return TOTAL_SPACE - findFolderSize(0);
+    }
+
+    private int findMinDeletableDirSize() {
+        int size = findFolderSize(0);
+        int needed = NECESSARY_SPACE - availableSpace;
+        System.out.println("Total: " + size);
+        System.out.println("Needed: " + needed);
+
+        for (int i = 1; i < fileTree.size(); i++) {
+            if (fileTree.get(i).size == 0) {
+                int test = findFolderSize(i);
+
+                if (test >= needed && test < size) {
+                    size = test;
                 }
             }
         }

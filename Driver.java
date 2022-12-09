@@ -36,6 +36,6 @@ public class Driver {
 
         System.out.println();
         System.out.println("Problem 7.1: " + fileSystem.getSmallDirectorySize());
-        System.out.println();
+        System.out.println("Problem 7.2: " + fileSystem.getMinDeletableDirSize());
     }
 }
