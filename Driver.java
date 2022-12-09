@@ -6,6 +6,7 @@ public class Driver {
         CleanupAssignments cleanupAssignments = new CleanupAssignments("inputs/day4.txt");
         CrateStacker crateStacker = new CrateStacker("inputs/day5.txt");
         SignalTuner signalTuner = new SignalTuner("inputs/day6.txt");
+        FileSystem fileSystem = new FileSystem("inputs/day7.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -32,5 +33,9 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 6.1: " + signalTuner.getFirstPacketMarker());
         System.out.println("Problem 6.2: " + signalTuner.getFirstMessageMarker());
+
+        System.out.println();
+        System.out.println("Problem 7.1: " + fileSystem.getSmallDirectorySize());
+        System.out.println();
     }
 }
