@@ -7,6 +7,7 @@ public class Driver {
         CrateStacker crateStacker = new CrateStacker("inputs/day5.txt");
         SignalTuner signalTuner = new SignalTuner("inputs/day6.txt");
         FileSystem fileSystem = new FileSystem("inputs/day7.txt");
+        Forest forest = new Forest("inputs/test.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -37,5 +38,8 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 7.1: " + fileSystem.getSmallDirectorySize());
         System.out.println("Problem 7.2: " + fileSystem.getMinDeletableDirSize());
+
+        System.out.println();
+        System.out.println("Problem 8.1: " + forest.getVisibleTreesCount());
     }
 }
