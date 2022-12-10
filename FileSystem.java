@@ -46,7 +46,7 @@ public class FileSystem {
     }
 
     private void makeFileTree() {
-        fileTree.add(new FileNode("/", 0, -1));
+        fileTree.add(new FileNode("/", -1));
 
         int currentNode = 0;
         int parentNode = 0;
@@ -60,14 +60,14 @@ public class FileSystem {
             } else if (lineArr[0].equals("dir")) {
                 int n = fileTree.size();
 
-                fileTree.add(new FileNode(lineArr[1], n, currentNode));
+                fileTree.add(new FileNode(lineArr[1], currentNode));
                 fileTree.get(currentNode).children.put(lineArr[1], n);
 
             } else if (!lineArr[0].equals("$")) {
                 int n = fileTree.size();
                 int size = Integer.parseInt(lineArr[0]);
 
-                fileTree.add(new FileNode(lineArr[1], n, currentNode, size));
+                fileTree.add(new FileNode(lineArr[1], currentNode, size));
                 fileTree.get(parentNode).children.put(lineArr[1], n);
             }
         }
@@ -103,8 +103,6 @@ public class FileSystem {
     private int findMinDeletableDirSize() {
         int size = findFolderSize(0);
         int needed = NECESSARY_SPACE - availableSpace;
-        System.out.println("Total: " + size);
-        System.out.println("Needed: " + needed);
 
         for (int i = 1; i < fileTree.size(); i++) {
             if (fileTree.get(i).size == 0) {
@@ -142,23 +140,20 @@ public class FileSystem {
 
     private class FileNode {
         private String name;
-        private int index, size, parent;
+        private int size, parent;
         private HashMap<String, Integer> children;
 
         // these are directories!
-        private FileNode(String name, int index, int parent) {
+        private FileNode(String name, int parent) {
             children = new HashMap<String, Integer>();
             this.name = name;
-            this.index = index;
             this.parent = parent;
             this.size = 0;
         }
 
         // these are files!
-        private FileNode(String name, int index, int parent, int size) {
+        private FileNode(String name, int parent, int size) {
             children = new HashMap<String, Integer>();
-            this.name = name;
-            this.index = index;
             this.parent = parent;
             this.size = size;
         }

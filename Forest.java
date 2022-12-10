@@ -6,15 +6,20 @@ import java.util.Scanner;
 public class Forest {
     private int[][] treeGrid;
     private HashSet<String> visibleTrees;
+    private int maxVisibilityScore;
 
     public Forest(String address) {
         parseInput(address);
         findVisibleTrees();
+        maxVisibilityScore = findMaxVisibilityScore();
     }
 
     public int getVisibleTreesCount() {
-        System.out.println(visibleTrees.toString());
         return this.visibleTrees.size();
+    }
+
+    public int getMaxVisibilityScore() {
+        return this.maxVisibilityScore;
     }
 
     private void parseInput(String address) {
@@ -53,50 +58,32 @@ public class Forest {
 
         // add first row
         for (int i = 0; i < treeGrid[0].length; i++) {
-            int x = 0;
-            int y = treeGrid[x][i];
-            String str = x + "," + y;
-
+            String str = 0 + "," + i;
             visibleTrees.add(str);
         }
 
         // add last row
         for (int i = 0; i < treeGrid[treeGrid.length - 1].length; i++) {
-            int x = treeGrid.length - 1;
-            int y = treeGrid[x][i];
-            String str = x + "," + y;
-
+            String str = (treeGrid.length - 1) + "," + i;
             visibleTrees.add(str);
         }
 
         // add first column
         for (int i = 0; i < treeGrid[0].length; i++) {
-            int y = 0;
-            int x = treeGrid[i][y];
-            
-            String str = x + "," + y;
-
+            String str = i + "," + 0;
             visibleTrees.add(str);
         }
 
         // add last column
         for (int i = 0; i < treeGrid[0].length; i++) {
-            int y = treeGrid[0].length - 1;
-            int x = treeGrid[i][y];
-            
-            String str = x + "," + y;
-
+            String str = i + "," + (treeGrid[0].length - 1);
             visibleTrees.add(str);
         }
 
-        // start left, go right
-        // start right, go left
         for (int i = 0; i < treeGrid.length; i++) {
             findVisibleTreesRow(i);
         }
 
-        // start up, go down
-        // start down, go up
         for (int i = 0; i < treeGrid[0].length; i++) {
             findVisibleTreesColumn(i);
         }
@@ -105,10 +92,9 @@ public class Forest {
     private void findVisibleTreesRow(int row) {
         int max = treeGrid[row][0];
 
-        for (int i = 1; i < treeGrid[row].length - 1; i++) {
+        for (int i = 1; i < treeGrid[row].length; i++) {
             if (treeGrid[row][i] > max) {
                 max = treeGrid[row][i];
-
                 visibleTrees.add(row + "," + i);
             }
         }
@@ -120,7 +106,6 @@ public class Forest {
         while (max < peak) {
             if (treeGrid[row][i] > max) {
                 max = treeGrid[row][i];
-
                 visibleTrees.add(row + "," + i);
             }
             i--;
@@ -130,10 +115,9 @@ public class Forest {
     private void findVisibleTreesColumn(int column) {
         int max = treeGrid[0][column];
 
-        for (int i = 1; i < treeGrid.length - 1; i++) {
+        for (int i = 1; i < treeGrid.length; i++) {
             if (treeGrid[i][column] > max) {
                 max = treeGrid[i][column];
-
                 visibleTrees.add(i + "," + column);
             }
         }
@@ -145,11 +129,87 @@ public class Forest {
         while (max < peak) {
             if (treeGrid[i][column] > max) {
                 max = treeGrid[i][column];
-
                 visibleTrees.add(i + "," + column);
             }
             i--;
         }
     }
 
+    private int findMaxVisibilityScore() {
+        int max = 0;
+
+        for (int i = 1; i < (treeGrid.length - 1); i++) {
+            for (int j = 1; j < (treeGrid[i].length - 1); j++) {
+                int e = findEastScore(i, j);
+                int w = findWestScore(i, j);
+                int n = findNorthScore(i, j);
+                int s = findSouthScore(i, j);
+
+                if (e * w * n * s > max)
+                    max = e * w * n * s;
+            }
+        }
+
+        return max;
+    }
+
+    private int findEastScore(int x, int y) {
+        int score = 0;
+        int height = treeGrid[x][y];
+        boolean blocked = false;
+        while (!blocked && x < treeGrid.length - 1) {        
+            x++;
+            score++; 
+            if (treeGrid[x][y] >= height) {
+                blocked = true;
+            }
+        }
+
+        return score;
+    }
+
+    private int findWestScore(int x, int y) {
+        int score = 0;
+        int height = treeGrid[x][y];
+        boolean blocked = false;
+        while (!blocked && x > 0) {        
+            x--;
+            score++;
+            if (treeGrid[x][y] >= height) {
+                blocked = true;
+            }       
+        }
+
+        return score;
+    }
+
+    private int findNorthScore(int x, int y) {
+        int score = 0;
+        int height = treeGrid[x][y];
+        boolean blocked = false;
+        while (!blocked && y > 0) {        
+            y--;
+            if (treeGrid[x][y] >= height) {
+                blocked = true;
+            }
+            score++;    
+        }
+
+        return score;
+    }
+
+    private int findSouthScore(int x, int y) {
+        int score = 0;
+        int height = treeGrid[x][y];
+        boolean blocked = false;
+        while (!blocked && y < treeGrid[x].length - 1) {        
+            y++;
+            if (treeGrid[x][y] >= height) {
+                blocked = true;
+            }
+            score++;    
+        }
+
+        return score;
+    }
 }

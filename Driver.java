@@ -7,7 +7,7 @@ public class Driver {
         CrateStacker crateStacker = new CrateStacker("inputs/day5.txt");
         SignalTuner signalTuner = new SignalTuner("inputs/day6.txt");
         FileSystem fileSystem = new FileSystem("inputs/day7.txt");
-        Forest forest = new Forest("inputs/test.txt");
+        Forest forest = new Forest("inputs/day8.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -41,5 +41,6 @@ public class Driver {
 
         System.out.println();
         System.out.println("Problem 8.1: " + forest.getVisibleTreesCount());
+        System.out.println("Problem 8.2: " + forest.getMaxVisibilityScore());
     }
 }
