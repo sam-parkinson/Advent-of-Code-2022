@@ -8,6 +8,7 @@ public class Driver {
         SignalTuner signalTuner = new SignalTuner("inputs/day6.txt");
         FileSystem fileSystem = new FileSystem("inputs/day7.txt");
         Forest forest = new Forest("inputs/day8.txt");
+        RopeBridge ropeBridge = new RopeBridge("inputs/test.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -42,5 +43,9 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 8.1: " + forest.getVisibleTreesCount());
         System.out.println("Problem 8.2: " + forest.getMaxVisibilityScore());
+
+        System.out.println();
+        System.out.println("Problem 9.1: " + ropeBridge.getTailVisitedCount());
+        System.out.println("Problem 9.2: " + ropeBridge.getLongTailVisitedCount());
     }
 }

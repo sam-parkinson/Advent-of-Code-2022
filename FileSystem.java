@@ -15,7 +15,6 @@ public class FileSystem {
         parseInput(address);
         fileTree = new ArrayList<FileNode>();
         makeFileTree();
-        // findFolderSize(0);
         smallDirectorySize = findSmallDirectorySize();
         availableSpace = findAvailableSpace();
         minDeletableDirSize = findMinDeletableDirSize();
@@ -46,7 +45,7 @@ public class FileSystem {
     }
 
     private void makeFileTree() {
-        fileTree.add(new FileNode("/", -1));
+        fileTree.add(new FileNode(-1));
 
         int currentNode = 0;
         int parentNode = 0;
@@ -60,14 +59,14 @@ public class FileSystem {
             } else if (lineArr[0].equals("dir")) {
                 int n = fileTree.size();
 
-                fileTree.add(new FileNode(lineArr[1], currentNode));
+                fileTree.add(new FileNode(currentNode));
                 fileTree.get(currentNode).children.put(lineArr[1], n);
 
             } else if (!lineArr[0].equals("$")) {
                 int n = fileTree.size();
                 int size = Integer.parseInt(lineArr[0]);
 
-                fileTree.add(new FileNode(lineArr[1], currentNode, size));
+                fileTree.add(new FileNode(currentNode, size));
                 fileTree.get(parentNode).children.put(lineArr[1], n);
             }
         }
@@ -139,20 +138,18 @@ public class FileSystem {
     }
 
     private class FileNode {
-        private String name;
         private int size, parent;
         private HashMap<String, Integer> children;
 
         // these are directories!
-        private FileNode(String name, int parent) {
+        private FileNode(int parent) {
             children = new HashMap<String, Integer>();
-            this.name = name;
             this.parent = parent;
             this.size = 0;
         }
 
         // these are files!
-        private FileNode(String name, int parent, int size) {
+        private FileNode(int parent, int size) {
             children = new HashMap<String, Integer>();
             this.parent = parent;
             this.size = size;
