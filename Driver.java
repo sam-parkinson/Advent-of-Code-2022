@@ -9,6 +9,7 @@ public class Driver {
         FileSystem fileSystem = new FileSystem("inputs/day7.txt");
         Forest forest = new Forest("inputs/day8.txt");
         RopeBridge ropeBridge = new RopeBridge("inputs/day9.txt");
+        CathodeRayTube cathodeRayTube = new CathodeRayTube("inputs/day10.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -47,5 +48,10 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 9.1: " + ropeBridge.getTailVisitedCount());
         System.out.println("Problem 9.2: " + ropeBridge.getLongTailVisitedCount());
+
+        System.out.println();
+        System.out.println("Problem 10.1: " + cathodeRayTube.getInterestingStrengths());
+        System.out.println("Problem 10.2: ");
+        cathodeRayTube.viewScreen();
     }
 }
