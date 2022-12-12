@@ -7,11 +7,10 @@ import java.util.Scanner;
 public class RopeBridge {
     private Instruction[] instructions;
     private HashSet<String> tailVisited, longTailVisited;
-    private int[][] shortRope, longRope;
+    private int[][] longRope;
 
     public RopeBridge(String address) {
         parseInput(address);
-        shortRope = new int[2][2];
         longRope = new int[10][2];
         tailVisited = new HashSet<String>();
         longTailVisited = new HashSet<String>();
@@ -54,39 +53,25 @@ public class RopeBridge {
         }
     }
 
-    /*
-     * The rope is not moving correctly for diagonal movements
-     * 
-     * This currently only works for a rope of length 2 where the tail is always going
-     * to be moving predictably based on the head. I need to compare the pulling rope's
-     * position with the pulled rope to find where the pulled rope moves.
-     * 
-     * Perhaps this means rethinking how the entire rope movement setup works. 
-     */
     private void followInstructions() {
-        tailVisited.add(Arrays.toString(shortRope[shortRope.length - 1]));
+        tailVisited.add(Arrays.toString(longRope[1]));
         longTailVisited.add(Arrays.toString(longRope[longRope.length - 1]));
         for (int i = 0; i < instructions.length; i++) {
             switch (instructions[i].direction) {
                 case "L":
-                    goLeft(instructions[i].distance, shortRope);
                     goLeft(instructions[i].distance, longRope);
                     break;
                 case "R":
-                    goRight(instructions[i].distance, shortRope);
                     goRight(instructions[i].distance, longRope);
                     break;
                 case "U":
-                    goUp(instructions[i].distance, shortRope);
                     goUp(instructions[i].distance, longRope);
                     break;
                 case "D":
                 default:
-                    goDown(instructions[i].distance, shortRope);
                     goDown(instructions[i].distance, longRope);
                     break;
             }
-            
         }
     }
 
@@ -94,16 +79,7 @@ public class RopeBridge {
         for (int i = 0; i < dist; i++) {
             rope[0][0]--;
 
-            for (int j = 0; j < rope.length - 1; j++) {
-                if (rope[j+1][0] - rope[j][0] > 1) {
-                    rope[j+1][0]--;
-                    rope[j+1][1] = rope[j][1];
-                }
-    
-            }
-            
-            HashSet<String> set = rope.length == 2 ? tailVisited : longTailVisited;
-            set.add(Arrays.toString(rope[rope.length - 1]));    
+            pullRope(rope);
         }
     }
 
@@ -111,15 +87,7 @@ public class RopeBridge {
         for (int i = 0; i < dist; i++) {
             rope[0][0]++;
 
-            for (int j = 0; j < rope.length - 1; j++) {
-                if (rope[j][0] - rope[j+1][0] > 1) {
-                    rope[j+1][0]++;
-                    rope[j+1][1] = rope[j][1];
-                }
-            }
-
-            HashSet<String> set = rope.length == 2 ? tailVisited : longTailVisited;
-            set.add(Arrays.toString(rope[rope.length - 1])); 
+            pullRope(rope);
         }
     }
 
@@ -127,15 +95,7 @@ public class RopeBridge {
         for (int i = 0; i < dist; i++) {
             rope[0][1]++;
 
-            for (int j = 0; j < rope.length - 1; j++) {
-                if (rope[j][1] - rope[j+1][1] > 1) {
-                    rope[j+1][1]++;
-                    rope[j+1][0] = rope[j][0];
-                }
-            }
-
-            HashSet<String> set = rope.length == 2 ? tailVisited : longTailVisited;
-            set.add(Arrays.toString(rope[rope.length - 1])); 
+            pullRope(rope);
         }
     }
 
@@ -143,16 +103,53 @@ public class RopeBridge {
         for (int i = 0; i < dist; i++) {
             rope[0][1]--;
 
-            for (int j = 0; j < rope.length - 1; j++) {
-                if (rope[j+1][1] - rope[j][1] > 1) {
-                    rope[j+1][1]--; 
-                    rope[j+1][0] = rope[j][0];
-                }
-            }
-            
-            HashSet<String> set = rope.length == 2 ? tailVisited : longTailVisited;
-            set.add(Arrays.toString(rope[rope.length - 1])); 
+            pullRope(rope);
         }
+    }
+
+    private void pullRope(int[][] rope) {
+        for (int i = 0; i < rope.length - 1; i++) {    
+            if (rope[i+1][0] - rope[i][0] > 1 && rope[i+1][1] == rope[i][1]) {
+                // left
+                rope[i+1][0]--;
+            } else if (rope[i][0] - rope[i+1][0] > 1 && rope[i+1][1] == rope[i][1]) {
+                // right
+                rope[i+1][0]++;
+            } else if (rope[i][1] - rope[i+1][1] > 1 && rope[i+1][0] == rope[i][0]) {
+                // up
+                rope[i+1][1]++;
+            } else if (rope[i+1][1] - rope[i][1] > 1 && rope[i+1][0] == rope[i][0]) {
+                // down
+                rope[i+1][1]--; 
+            } else if (rope[i+1][0] > rope[i][0] && rope[i+1][1] < rope[i][1]) {
+                // up and left
+                if (rope[i+1][0] - rope[i][0] > 1 || rope[i][1] - rope[i+1][1] > 1) {
+                    rope[i+1][0]--;
+                    rope[i+1][1]++;
+                }
+            } else if (rope[i+1][0] < rope[i][0] && rope[i+1][1] < rope[i][1]) {
+                // up and right
+                if (rope[i][0] - rope[i+1][0] > 1 || rope[i][1] - rope[i+1][1] > 1) {
+                    rope[i+1][0]++;
+                    rope[i+1][1]++;
+                }    
+            } else if (rope[i+1][0] > rope[i][0] && rope[i+1][1] > rope[i][1]) {
+                // down and left
+                if (rope[i+1][0] - rope[i][0] > 1 || rope[i+1][1] - rope[i][1] > 1) {
+                    rope[i+1][0]--;
+                    rope[i+1][1]--;
+                }    
+            } else if (rope[i+1][0] < rope[i][0] && rope[i+1][1] > rope[i][1]) {
+                // down and right
+                if (rope[i][0] - rope[i+1][0] > 1 || rope[i+1][1] - rope[i][1] > 1) {
+                    rope[i+1][0]++;
+                    rope[i+1][1]--;
+                }               
+            }
+        }
+
+        tailVisited.add(Arrays.toString(rope[1]));
+        longTailVisited.add(Arrays.toString(rope[rope.length - 1])); 
     }
 
     private class Instruction {

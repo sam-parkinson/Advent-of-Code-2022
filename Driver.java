@@ -8,7 +8,7 @@ public class Driver {
         SignalTuner signalTuner = new SignalTuner("inputs/day6.txt");
         FileSystem fileSystem = new FileSystem("inputs/day7.txt");
         Forest forest = new Forest("inputs/day8.txt");
-        RopeBridge ropeBridge = new RopeBridge("inputs/test.txt");
+        RopeBridge ropeBridge = new RopeBridge("inputs/day9.txt");
 
         System.out.println("Advent of Code 2022");
 
