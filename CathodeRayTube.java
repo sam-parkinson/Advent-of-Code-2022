@@ -88,7 +88,6 @@ public class CathodeRayTube {
 
     private void drawPixel(int i, int x) {
         int pos = (i) % 40;
-        System.out.println(pos);
 
         if (Math.abs(x - pos) < 2) {
             screen[i / 40] += "#";

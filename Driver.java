@@ -10,6 +10,7 @@ public class Driver {
         Forest forest = new Forest("inputs/day8.txt");
         RopeBridge ropeBridge = new RopeBridge("inputs/day9.txt");
         CathodeRayTube cathodeRayTube = new CathodeRayTube("inputs/day10.txt");
+        MonkeyTroop monkeyTroop = new MonkeyTroop("inputs/test.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -51,7 +52,11 @@ public class Driver {
 
         System.out.println();
         System.out.println("Problem 10.1: " + cathodeRayTube.getInterestingStrengths());
-        System.out.println("Problem 10.2: ");
-        cathodeRayTube.viewScreen();
+        System.out.println("Problem 10.2: "); // uncomment below to see working
+        // cathodeRayTube.viewScreen();
+
+        System.out.println();
+        System.out.println("Problem 11.1: " + monkeyTroop.getMonkeyBusinessCalm());
+        System.out.println("Problem 11.2: " + monkeyTroop.getMonkeyBusinessWild());
     }
 }
