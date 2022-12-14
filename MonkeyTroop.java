@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class MonkeyTroop {
     private Monkey[] calmTroop, wildTroop;
     private long monkeyBusinessCalm, monkeyBusinessWild;
+    private int primeMultiple;
 
     public MonkeyTroop(String address) {
         parseInput(address);
@@ -60,6 +61,11 @@ public class MonkeyTroop {
     }
 
     private void performMonkeyBusiness(Monkey[] troop, int rounds) {
+        primeMultiple = 1;
+        for (int i = 0; i < troop.length; i++) {
+            primeMultiple *= troop[i].testDivisor;
+        }
+
         for (int i = 0; i < rounds; i++) {
             for (int j = 0; j < troop.length; j++) {
                 troop[j].examineItems(troop);
@@ -121,11 +127,16 @@ public class MonkeyTroop {
             while (!items.isEmpty()) {
                 long item = items.removeFirst();
                 long x = opMagnitude == -1 ? item : (long) opMagnitude;
+            
                 item = isOpMultiply ? item * x : item + x;
                 if (this.isTroopCalm) {
                     item = item / 3;
-                }         
+                }
+                
+                item = item % primeMultiple;
                 int index = item % testDivisor == 0 ? trueThrow : falseThrow;
+                
+                // do something
                 troop[index].items.addLast(item);
             }
         }

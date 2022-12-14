@@ -10,7 +10,7 @@ public class Driver {
         Forest forest = new Forest("inputs/day8.txt");
         RopeBridge ropeBridge = new RopeBridge("inputs/day9.txt");
         CathodeRayTube cathodeRayTube = new CathodeRayTube("inputs/day10.txt");
-        MonkeyTroop monkeyTroop = new MonkeyTroop("inputs/test.txt");
+        MonkeyTroop monkeyTroop = new MonkeyTroop("inputs/day11.txt");
 
         System.out.println("Advent of Code 2022");
 
