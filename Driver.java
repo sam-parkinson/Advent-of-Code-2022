@@ -11,6 +11,7 @@ public class Driver {
         RopeBridge ropeBridge = new RopeBridge("inputs/day9.txt");
         CathodeRayTube cathodeRayTube = new CathodeRayTube("inputs/day10.txt");
         MonkeyTroop monkeyTroop = new MonkeyTroop("inputs/day11.txt");
+        HillClimber hillClimber = new HillClimber("inputs/day12.txt");
 
         System.out.println("Advent of Code 2022");
 
@@ -58,5 +59,9 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 11.1: " + monkeyTroop.getMonkeyBusinessCalm());
         System.out.println("Problem 11.2: " + monkeyTroop.getMonkeyBusinessWild());
+
+        System.out.println();
+        System.out.println("Problem 12.1: " + hillClimber.getPathLength());
+        System.out.println("Problem 12.2: " + hillClimber.getTrailLength());
     }
 }

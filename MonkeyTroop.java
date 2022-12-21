@@ -69,10 +69,6 @@ public class MonkeyTroop {
         for (int i = 0; i < rounds; i++) {
             for (int j = 0; j < troop.length; j++) {
                 troop[j].examineItems(troop);
-
-                if (i % 1000 == 999 || i == 19) {
-                    System.out.println(troop[j].itemsInspected);
-                }
             }
         }
     }
@@ -82,9 +78,7 @@ public class MonkeyTroop {
 
         for (int i = 0; i < itemCountArr.length; i++) {
             itemCountArr[i] = troop[i].itemsInspected;
-            System.out.print(itemCountArr[i] + ", ");
         }
-        System.out.println();
 
         Arrays.sort(itemCountArr);
 
